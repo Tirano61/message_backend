@@ -1,0 +1,15 @@
+
+
+version: '3'
+
+services: 
+  db: 
+    image: mongo:5
+    restart: always
+    container_name: message_service_db
+    ports: 
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: 'message_service_db' 
+    volumes: # Guarda la data en en volumen del disco local para la persistencia de datos
+      - ./mongodb:/data/db
