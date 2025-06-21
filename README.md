@@ -43,6 +43,11 @@ docker-compose up -d
       synchronize: true, // generalmente se usa en true en desarrollo, en produccionse hace una migracion
     }),
     ```
+  * Encriptar contraseña
+    ```
+    npm i bcrypt
+    npm i --save-dev @types/bcrypt
+    ```
 
 
 
