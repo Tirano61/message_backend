@@ -22,6 +22,28 @@ nm i -g @nestjs/cli
 ```
 docker-compose up -d
 ```
+### Packages
+ * Configurar las variables de entorno
+    ```
+    pm i @nestjs/config
+    app.module.ts  ConfigModule.forRoot(),
+    ```
+ * Base de datos
+    ```
+    npm install --save @nestjs/typeorm typeorm pg
+    app.module.ts
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: +(process.env.BD_PORT ?? 5432), 
+      database: process.env.POSTGRES_DB_NAME,
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      autoLoadEntities: true,
+      synchronize: true, // generalmente se usa en true en desarrollo, en produccionse hace una migracion
+    }),
+    ```
+
 
 
 
