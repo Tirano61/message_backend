@@ -28,6 +28,7 @@ docker-compose up -d
     pm i @nestjs/config
     app.module.ts  ConfigModule.forRoot(),
     ```
+    
  * Base de datos
     ```
     npm install --save @nestjs/typeorm typeorm pg
@@ -43,10 +44,18 @@ docker-compose up -d
       synchronize: true, // generalmente se usa en true en desarrollo, en produccionse hace una migracion
     }),
     ```
+
   * Encriptar contraseña
     ```
     npm i bcrypt
     npm i --save-dev @types/bcrypt
+    ```
+
+  * JWT
+    ```
+    npm install --save @nestjs/passport passport
+    npm install --save @nestjs/jwt passport-jwt
+    npm install --save-dev @types/passport-jwt
     ```
 
 
