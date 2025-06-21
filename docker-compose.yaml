@@ -4,12 +4,15 @@ version: '3'
 
 services: 
   db: 
-    image: mongo:5
+    image: postgres:14.3
     restart: always
     container_name: message_service_db
     ports: 
-      - 27017:27017
+      - 5432:5432
     environment:
-      MONGODB_DATABASE: 'message_service_db' 
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      # Variables de entorno para la base de datos
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes: # Guarda la data en en volumen del disco local para la persistencia de datos
-      - ./mongodb:/data/db
+      - ./postgresdb:/var/lib/postgresql/data
