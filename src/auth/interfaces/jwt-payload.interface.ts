@@ -2,7 +2,7 @@
 
 
 export interface JWTPayloadInterface{
-    email: string;
+    id: string;
 
     // TODO: añdir todo lo quiera grabar
 }
