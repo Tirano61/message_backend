@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetadata } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create_user.dto';
 import { LoginUserDto } from './dto/login_user.dto';
@@ -6,6 +6,10 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { GetRawHeaders } from './decorators/get-rowHeaders.decorator';
+import { UserRoleGuard } from './guards/user-role/user-role.guard';
+import { RoleProtected } from './decorators/role-protected/role-protected.decorator';
+import { ValidRoles } from './interfaces/valid-roles';
+import { Auth } from './decorators/auth.decorator';
 
 
 @Controller('auth')
@@ -34,6 +38,30 @@ export class AuthController {
       user: user,
       userEmail,
       rawHeaders
+    }
+  }
+
+  @Get('private2')
+  //@SetMetadata('roles', ['admin', 'super-user'])
+  @RoleProtected( ValidRoles.superUser )
+  @UseGuards( AuthGuard(), UserRoleGuard )
+  private2(
+    @GetUser() user: User,
+  ){
+    return{
+      ok: true,
+      user
+    }
+  }
+  /// Uso de Decorator composition
+  @Get('private3')
+  @Auth( ValidRoles.superUser ) /// El Auth se debe llamar en las rutas para comprobar el acceso, si es publica Auth()
+  private3(
+    @GetUser() user: User,
+  ){
+    return{
+      ok: true,
+      user
     }
   }
 
