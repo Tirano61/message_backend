@@ -3,6 +3,9 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create_user.dto';
 import { LoginUserDto } from './dto/login_user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from './decorators/get-user.decorator';
+import { User } from './entities/user.entity';
+import { GetRawHeaders } from './decorators/get-rowHeaders.decorator';
 
 
 @Controller('auth')
@@ -21,10 +24,16 @@ export class AuthController {
 
   @Get('private')
   @UseGuards( AuthGuard() )
-  testingPrivateRout(){
+  testingPrivateRout( 
+    @GetUser() user: User,
+    @GetUser('email') userEmail: string,
+    @GetRawHeaders() rawHeaders: string[]
+  ){
     return {
       ok: true,
-      message: 'Hola mundo private'
+      user: user,
+      userEmail,
+      rawHeaders
     }
   }
 
