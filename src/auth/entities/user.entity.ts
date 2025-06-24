@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Conversation } from "src/conversation/entities/conversation.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -27,6 +28,15 @@ export class User {
         default: ['user']
     })
     roles: string[];
+
+    @OneToMany(() => Conversation, conversation => conversation.user)
+    conversations: Conversation[];
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    created_at: Date;
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    updated_at: Date;
 
 
     @BeforeInsert()
