@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MessageModule } from './message/message.module';
+import { ConversationModule } from './conversation/conversation.module';
+
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true, // generalmente se usa en true en desarrollo, en produccionse hace una migracion
     }),
     AuthModule,
+    MessageModule,
+    ConversationModule,
+    
   ],
   controllers: [],
   providers: [],
