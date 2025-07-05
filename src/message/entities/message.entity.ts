@@ -6,7 +6,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 @Entity()
 export class Message {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @ManyToOne(() => Conversation, conversation => conversation.messages)
     conversation: Conversation;

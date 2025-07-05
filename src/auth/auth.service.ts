@@ -46,7 +46,7 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { email: true, password: true, id: true }
+      select: { email: true, password: true, id: true, fullName: true }
     });
 
     if( !user )
@@ -71,7 +71,6 @@ export class AuthService {
   private handleDBError(error: any): never {
     if(error.code === '23505')
       throw new BadRequestException(error.detail);
-
     console.log(error);
 
     throw new InternalServerErrorException('Please check server logs');
