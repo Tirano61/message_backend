@@ -20,9 +20,10 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.chatWsService.removeClient( client.id );
   }
 
-  @SubscribeMessage('client-send_message')
+  @SubscribeMessage('client-send-message')
   async handleClientSendMessage(client: Socket, payload: SendMessageDto) {
     try {
+      console.log('Mensaje recibido',payload);
       // Crear el mensaje en la base de datos
       const newMessage = await this.messageService.create({
         conversationId: payload.conversationId,
@@ -30,6 +31,7 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
         content: payload.content,
         type: payload.type || 'text',
       });
+      console.log({newMessage});
       
       // También emitir de vuelta al cliente que envió el mensaje para confirmación
       client.emit('message-saved', newMessage);

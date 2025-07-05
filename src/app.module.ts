@@ -6,8 +6,7 @@ import { MessageModule } from './message/message.module';
 import { ConversationModule } from './conversation/conversation.module';
 import { ChatWsModule } from './chat-ws/chat-ws.module';
 import { CategoryModule } from './category/category.module';
-import { CategoryModule } from './category/category.module';
-import { CategoryModule } from './category/category.module';
+
 
 
 
