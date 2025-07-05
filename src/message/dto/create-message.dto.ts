@@ -5,9 +5,9 @@ export class CreateMessageDto {
     @IsNotEmpty()
     conversationId: string;
 
-    @IsEnum(['user', 'system'])
+    @IsEnum(['user', 'tecnico'])
     @IsNotEmpty()
-    sender: 'user' | 'system';
+    sender: 'user' | 'tecnico';
 
     @IsString()
     @IsNotEmpty()

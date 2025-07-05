@@ -43,7 +43,7 @@ export class AuthController {
 
   @Get('private2')
   //@SetMetadata('roles', ['admin', 'super-user'])
-  @RoleProtected( ValidRoles.superUser )
+  @RoleProtected( ValidRoles.admin )
   @UseGuards( AuthGuard(), UserRoleGuard )
   private2(
     @GetUser() user: User,
@@ -55,7 +55,7 @@ export class AuthController {
   }
   /// Uso de Decorator composition
   @Get('private3')
-  @Auth( ValidRoles.superUser ) /// El Auth se debe llamar en las rutas para comprobar el acceso, si es publica Auth()
+  @Auth( ValidRoles.admin ) /// El Auth se debe llamar en las rutas para comprobar el acceso, si es publica Auth()
   private3(
     @GetUser() user: User,
   ){

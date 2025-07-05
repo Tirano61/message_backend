@@ -14,6 +14,6 @@ export class Category {
     @Column({ default: true })
     isActive: boolean;
 
-    @Column({ default: 'final' })
-    type: 'final' | 'tecnico'; // 'final' para usuarios finales, 'tecnico' para técnicos
+    @Column({ default: 'user' })
+    type: 'user' | 'tecnico'; // 'final' para usuarios finales, 'tecnico' para técnicos
 }

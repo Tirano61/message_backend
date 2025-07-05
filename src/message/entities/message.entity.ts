@@ -11,8 +11,8 @@ export class Message {
     @ManyToOne(() => Conversation, conversation => conversation.messages)
     conversation: Conversation;
 
-    @Column({ type: 'enum', enum: ['user', 'system'] })
-    sender: 'user' | 'system';
+    @Column({ type: 'enum', enum: ['user', 'tecnico'] })
+    sender: 'user' | 'tecnico';
 
     @Column('text')
     content: string;

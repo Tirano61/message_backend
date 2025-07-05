@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsUUID, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsUUID, IsOptional, IsIn } from 'class-validator';
 
 export class SendMessageDto {
     @IsString()
@@ -12,4 +12,8 @@ export class SendMessageDto {
     @IsString()
     @IsOptional()
     type?: string = 'text';
+
+    @IsIn(['user', 'tecnico'])
+    @IsNotEmpty()
+    sender: 'user' | 'tecnico';
 }
