@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Component } from 'src/component/entities/component.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Category {
@@ -7,6 +8,9 @@ export class Category {
 
     @Column()
     name: string; // Ej: "Laptops", "Smartphones", "Impresoras"
+
+    @OneToMany(() => Component, component => component.category, { cascade: true })
+    components: Component[];
 
     @Column({ nullable: true })
     description?: string;
