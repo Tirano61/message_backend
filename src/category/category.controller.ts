@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
@@ -16,8 +16,9 @@ export class CategoryController {
   }
 
   @Get('category')
-  findAll() {
-    return this.categoryService.findAll();
+  @Auth(ValidRoles.admin, ValidRoles.user, ValidRoles.tecnico)
+  findAll(@Query('type') type?: 'user' | 'tecnico') {
+    return this.categoryService.findAll(type);
   }
 
   @Get(':id')

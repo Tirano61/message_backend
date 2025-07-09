@@ -32,8 +32,16 @@ export class CategoryService {
     return this.categoryRepository.save(category);
   }
 
-  findAll() {
-    return this.categoryRepository.find();
+  async findAll(type?: 'user' | 'tecnico') {
+    try {
+      if (type) {
+        const categories = await this.categoryRepository.find({ relations: ['components'] });
+        return categories;
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      throw new Error('Failed to fetch categories');
+    }
   }
 
   findOne(id: string) {
