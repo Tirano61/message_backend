@@ -1,26 +1,50 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Category } from './entities/category.entity';
+import { Repository } from 'typeorm';
+import { CategoryDto } from './dto/create-category.dto';
+import { Component } from 'src/component/entities/component.entity';
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+
+  constructor(
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(Component)
+    private readonly componentRepository: Repository<Component>,
+  ) {}
+
+  async create(categoryDto: CategoryDto) {
+    // Mapear los nombres de componentes a entidades Component
+    let components: Component[] = [];
+    if (categoryDto.components && categoryDto.components.length > 0) {
+      // Fetch existing components by name from the database
+      components = await this.componentRepository.findBy(categoryDto.components);
+    }
+
+    const category = this.categoryRepository.create({
+      ...categoryDto,
+      components,
+    });
+
+    return this.categoryRepository.save(category);
   }
 
   findAll() {
-    return `This action returns all category`;
+    return this.categoryRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  findOne(id: string) {
+    return this.categoryRepository.findOneBy({ id });
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    return this.categoryRepository.update(id, updateCategoryDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} category`;
   }
 }
