@@ -1,16 +1,25 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { Component } from "src/component/entities/component.entity";
 
-export class CreateCategoryDto {
+export class CategoryDto {    
 
     @IsString()
     @IsNotEmpty()
     name: string;
 
+    @IsArray()
+    @IsOptional()
+    components?: Component[]; // Si usas la entidad Component, cambia el tipo
+
     @IsString()
-    description: string;
+    @IsOptional()
+    description?: string;
+
+    @IsBoolean()
+    @IsOptional()
+    isActive?: boolean;
 
     @IsString()
     @IsNotEmpty()
-    type: string; // 'user' o 'tecnico'
-    
+    type: 'user' | 'tecnico';
 }
