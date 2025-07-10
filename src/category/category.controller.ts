@@ -9,9 +9,10 @@ import { CategoryDto } from './dto/create-category.dto';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Post('category')
+  @Post()
   @Auth(ValidRoles.admin)
   create(@Body() categoryDto: CategoryDto) {
+    
     return this.categoryService.create(categoryDto);
   }
 
