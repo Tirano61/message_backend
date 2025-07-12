@@ -20,7 +20,6 @@ export class CategoryService {
     // Mapear los nombres de componentes a entidades Component
     let components: Component[] = [];
     if (categoryDto.components && categoryDto.components.length > 0) {
-      // Fetch existing components by name from the database
       components = await this.componentRepository.findBy(categoryDto.components);
     }
 
@@ -36,7 +35,10 @@ export class CategoryService {
     try {
       if (type) {
         const categories = await this.categoryRepository.find({ relations: ['components'] });
-        return categories;
+        const filter = categories.filter(category => category.type === type);
+        console.log(filter);
+        return filter;
+        
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -53,6 +55,7 @@ export class CategoryService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} category`;
+    return this.categoryRepository.delete(id);
   }
 }
+

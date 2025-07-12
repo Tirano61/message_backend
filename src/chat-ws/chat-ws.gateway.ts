@@ -3,6 +3,7 @@ import { ChatWsService } from './chat-ws.service';
 import { MessageService } from '../message/message.service';
 import { Socket } from 'socket.io';
 import { SendMessageDto } from './dto/send-message.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @WebSocketGateway({ cors: true })
 export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -10,6 +11,8 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private readonly chatWsService: ChatWsService,
     private readonly messageService: MessageService,
+    private readonly swtService: JwtService,
+    
   ) {}
   handleConnection(client: Socket) {
     console.log('Cliene conectado', client.id)
