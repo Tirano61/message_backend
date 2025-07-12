@@ -16,7 +16,7 @@ export class CategoryController {
     return this.categoryService.create(categoryDto);
   }
 
-  @Get('category')
+  @Get()
   @Auth(ValidRoles.admin, ValidRoles.user, ValidRoles.tecnico)
   findAll(@Query('type') type?: 'user' | 'tecnico') {
     return this.categoryService.findAll(type);
@@ -28,7 +28,7 @@ export class CategoryController {
   }
 
   @Patch(':id')
-  @Auth(ValidRoles.admin)
+  @Auth(ValidRoles.admin, ValidRoles.user, ValidRoles.tecnico)
   update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return this.categoryService.update(id, updateCategoryDto);
   }
