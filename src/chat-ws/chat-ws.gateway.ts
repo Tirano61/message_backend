@@ -6,6 +6,7 @@ import { SendMessageDto } from './dto/send-message.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JWTPayloadInterface } from 'src/auth/interfaces/jwt-payload.interface';
 
+
 @WebSocketGateway({ cors: true })
 export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   
@@ -13,7 +14,7 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private readonly chatWsService: ChatWsService,
     private readonly messageService: MessageService,
     private readonly swtService: JwtService,
-    
+
   ) {}
   handleConnection(client: Socket) {
     const token = client.handshake.headers.authentication as string;

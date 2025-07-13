@@ -6,7 +6,6 @@ export class CreateConversationDto {
     @IsNotEmpty()
     categoryId: string;
 
-
     @IsUUID()
     @IsNotEmpty()
     userId: string;
