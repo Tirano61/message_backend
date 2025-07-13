@@ -15,5 +15,5 @@ export class CreateConversationDto {
     status: string;
 
     messages?: string[];
-    
+
 }

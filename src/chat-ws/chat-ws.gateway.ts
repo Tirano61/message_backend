@@ -4,7 +4,8 @@ import { MessageService } from '../message/message.service';
 import { Socket } from 'socket.io';
 import { SendMessageDto } from './dto/send-message.dto';
 import { JwtService } from '@nestjs/jwt';
-import { JWTPayloadInterface } from '../../dist/auth/interfaces/jwt-payload.interface';
+import { JWTPayloadInterface } from 'src/auth/interfaces/jwt-payload.interface';
+
 
 @WebSocketGateway({ cors: true })
 export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -16,21 +17,20 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   ) {}
   handleConnection(client: Socket) {
-    
     const token = client.handshake.headers.authentication as string;
-    let payload: JWTPayloadInterface;
+    let header: JWTPayloadInterface;
     try {
-      payload = this.swtService.verify( token );
+      header = this.swtService.verify( token );
 
     } catch (error) {
       client.disconnect();
       console.error('Error al conectar el cliente:', error);
       return;
     }
-    console.log('Cliente conectado', {payload} );
+    console.log('Cliente conectado', {header} );
     this.chatWsService.registerClient(client);
   }
-
+  
   handleDisconnect(client: Socket) {
     console.log('Cliente desconectado.', client.id);
     this.chatWsService.removeClient( client.id );
@@ -62,7 +62,6 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       console.error('Error saving message:', error);
       client.emit('error', { message: 'Error al guardar el mensaje' });
     }
-  }
 
-
+  }  
 }
