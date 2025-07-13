@@ -10,7 +10,7 @@ export class ConversationController {
   constructor(private readonly conversationService: ConversationService) {}
 
   @Post('create')
-  @Auth(ValidRoles.user, ValidRoles.admin, ValidRoles.tecnico)
+  @Auth(ValidRoles.user, ValidRoles.tecnico)
   create(@Body() createConversationDto: CreateConversationDto) {
     return this.conversationService.create(createConversationDto);
   }

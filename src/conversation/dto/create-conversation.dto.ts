@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 
 export class CreateConversationDto {
 
@@ -6,9 +6,14 @@ export class CreateConversationDto {
     @IsNotEmpty()
     categoryId: string;
 
-  // Si necesitas el userId explícitamente (por ejemplo, para pruebas)
     @IsUUID()
     @IsNotEmpty()
     userId: string;
 
+    @IsEnum(['open', 'close'])
+    @IsNotEmpty()
+    status: string;
+
+    messages?: string[];
+    
 }
