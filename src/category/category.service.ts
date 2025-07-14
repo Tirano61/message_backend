@@ -5,6 +5,7 @@ import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
 import { CategoryDto } from './dto/create-category.dto';
 import { Component } from 'src/component/entities/component.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class CategoryService {
@@ -31,15 +32,18 @@ export class CategoryService {
     return this.categoryRepository.save(category);
   }
 
-  async findAll(type?: 'user' | 'tecnico') {
+  async findAll(user: User) {
     try {
-      if (type) {
-        const categories = await this.categoryRepository.find({ relations: ['components'] });
-        const filter = categories.filter(category => category.type === type);
-        console.log(filter);
-        return filter;
-        
+      const categories = await this.categoryRepository.find({ relations: ['components'] });
+
+      // Si el usuario es tecnico o admin, devuelve todas las categorías
+      if (user.roles.includes('admin') || user.roles.includes('tecnico')) {
+        return categories;
       }
+
+      // Si solo es user, devuelve solo las categorías de tipo 'user'
+      const filtered = categories.filter(category => category.type === 'user');
+      return filtered;
     } catch (error) {
       console.error('Error fetching categories:', error);
       throw new Error('Failed to fetch categories');
