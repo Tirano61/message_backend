@@ -15,6 +15,9 @@ export class Conversation {
     @ManyToOne(() => Category)
     category: Category;
 
+    @Column()
+    component: string;
+
     @Column({ default: 'open' })
     status: string;
 
