@@ -20,6 +20,7 @@ services:
     image: n8nio/n8n
     container_name: n8n
     restart: unless-stopped
+    command: start --tunnel
     environment:
       - N8N_PORT=5678
       - DB_TYPE=postgresdb

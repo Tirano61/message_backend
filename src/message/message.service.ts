@@ -16,7 +16,6 @@ export class MessageService {
     const message = this.messageRepository.create({
       content: createMessageDto.content,
       sender: createMessageDto.sender,
-      type: createMessageDto.type,
       conversation: { id: createMessageDto.conversationId } as any,
     });
     

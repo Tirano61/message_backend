@@ -11,14 +11,11 @@ export class Message {
     @ManyToOne(() => Conversation, conversation => conversation.messages)
     conversation: Conversation;
 
-    @Column({ type: 'enum', enum: ['user', 'tecnico'] })
-    sender: 'user' | 'tecnico';
+    @Column({ type: 'enum', enum: ['user', 'bot'] })
+    sender: 'user' | 'bot';
 
     @Column('text')
     content: string;
-
-    @Column({ default: 'text' })
-    type: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
