@@ -13,7 +13,7 @@ export class SendMessageDto {
     @IsOptional()
     type?: string = 'text';
 
-    @IsIn(['user', 'tecnico'])
+    @IsIn(['user', 'bot'])
     @IsNotEmpty()
-    sender: 'user' | 'tecnico';
+    sender: 'user' | 'bot';
 }

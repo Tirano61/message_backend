@@ -1,6 +1,5 @@
 import { User } from 'src/auth/entities/user.entity';
 import { Message } from 'src/message/entities/message.entity';
-import { Category } from 'src/category/entities/category.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
 
@@ -12,14 +11,8 @@ export class Conversation {
     @ManyToOne(() => User, user => user.conversations)
     user: User;
 
-    @ManyToOne(() => Category)
-    category: Category;
-
-    @Column()
-    component: string;
-
-    @Column({ default: 'open' })
-    status: string;
+    @Column({ nullable: true })
+    title: string;
 
     @OneToMany(() => Message, message => message.conversation)
     messages: Message[];

@@ -1,19 +1,13 @@
-import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateConversationDto {
 
     @IsUUID()
     @IsNotEmpty()
-    categoryId: string;
+    user: string;
 
-    @IsUUID()
-    @IsNotEmpty()
-    userId: string;
-
-    @IsEnum(['open', 'close'])
-    @IsNotEmpty()
-    status: string;
-
-    messages?: string[];
+    @IsOptional()
+    @IsString()
+    title?: string;
 
 }

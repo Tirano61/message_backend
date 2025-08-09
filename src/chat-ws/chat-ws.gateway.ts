@@ -44,13 +44,11 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       header = this.swtService.verify( token );
       console.log('Mensaje recibido',header, payload);
     
-      client.emit('error', { message: 'Token inválido o expirado' });
       // Crear el mensaje en la base de datos
       const newMessage = await this.messageService.create({
         conversationId: payload.conversationId,
         sender: 'user',
         content: payload.content,
-        type: payload.type || 'text',
       });
       console.log({newMessage});
       
@@ -60,7 +58,7 @@ export class ChatWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return newMessage;
     } catch (error) {
       console.error('Error saving message:', error);
-      client.emit('error', { message: 'Error al guardar el mensaje' });
+      client.emit('error', { message: 'Token inválido o expirado' });
     }
 
   }  

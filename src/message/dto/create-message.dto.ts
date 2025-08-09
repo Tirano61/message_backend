@@ -1,19 +1,17 @@
 import { IsString, IsNotEmpty, IsUUID, IsOptional, IsEnum } from 'class-validator';
 
 export class CreateMessageDto {
+    
     @IsUUID()
     @IsNotEmpty()
     conversationId: string;
 
-    @IsEnum(['user', 'tecnico'])
+    @IsEnum(['user', 'bot'])
     @IsNotEmpty()
-    sender: 'user' | 'tecnico';
+    sender: 'user' | 'bot';
 
     @IsString()
     @IsNotEmpty()
     content: string;
 
-    @IsString()
-    @IsOptional()
-    type?: string = 'text';
 }

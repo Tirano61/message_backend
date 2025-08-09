@@ -4,6 +4,7 @@ import { UpdateConversationDto } from './dto/update-conversation.dto';
 import { Repository } from 'typeorm';
 import { Conversation } from './entities/conversation.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto } from 'src/auth/dto/create_user.dto';
 
 @Injectable()
 export class ConversationService {
@@ -13,10 +14,10 @@ export class ConversationService {
   ){}
   
   create(createConversationDto: CreateConversationDto) {
-    const {categoryId, userId} = createConversationDto;
+    const { user, title } = createConversationDto;
     const conversation = this.conversationRepository.create({
-      category: { id: categoryId } as any,
-      user: { id: userId } as any,
+      user: { id: user },
+      title: title || 'title',
     });
     return this.conversationRepository.save(conversation);
   }
