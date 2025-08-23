@@ -15,6 +15,12 @@ export class ConversationController {
     return this.conversationService.create(createConversationDto);
   }
 
+  @Post('create-tecnico')
+  @Auth(ValidRoles.tecnico)
+  createTecnico(@Body() createConversationDto: CreateConversationDto) {
+    return this.conversationService.create(createConversationDto);
+  }
+
   @Get()
   findAll() {
     return this.conversationService.findAll();
