@@ -6,10 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  controllers: [ ConversationController],
-  providers: [ ConversationService],
-  imports: [ TypeOrmModule.forFeature([Conversation]), PassportModule.register({ defaultStrategy: 'jwt' }) ],
-  exports: [ TypeOrmModule ]
+	controllers: [ConversationController],
+	providers: [ConversationService],
+	imports: [TypeOrmModule.forFeature([Conversation]), PassportModule.register({ defaultStrategy: 'jwt' })],
+	exports: [TypeOrmModule, ConversationService]
 })
-export class ConversationModule {}
+export class ConversationModule { }
 

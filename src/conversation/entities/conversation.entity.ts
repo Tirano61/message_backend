@@ -1,26 +1,33 @@
 import { User } from 'src/auth/entities/user.entity';
 import { Message } from 'src/message/entities/message.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn, RelationId } from 'typeorm';
 
 
 @Entity()
 export class Conversation {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+	@PrimaryGeneratedColumn('uuid')
+	id: string;
 
-    @ManyToOne(() => User, user => user.conversations)
-    user: User;
+	@ManyToOne(() => User, user => user.conversations, { nullable: true })
+	@JoinColumn({ name: 'user_id' })
+	user?: User;
 
-    @Column({ nullable: true })
-    title: string;
+	@RelationId((conversation: Conversation) => conversation.user)
+	user_id?: string;
 
-    @OneToMany(() => Message, message => message.conversation)
-    messages: Message[];
+	@Column({ nullable: true })
+	title: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    created_at: Date;
+	@OneToMany(() => Message, message => message.conversation)
+	messages: Message[];
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    updated_at: Date;
+	@Column({ nullable: true, unique: true })
+	session_token: string;
+
+	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+	created_at: Date;
+
+	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+	updated_at: Date;
 
 }

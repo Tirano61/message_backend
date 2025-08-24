@@ -1,19 +1,23 @@
 import { IsString, IsNotEmpty, IsUUID, IsOptional, IsIn } from 'class-validator';
 
 export class SendMessageDto {
-    @IsString()
-    @IsNotEmpty()
-    content: string;
+	@IsString()
+	@IsNotEmpty()
+	content: string;
 
-    @IsUUID()
-    @IsNotEmpty()
-    conversationId: string;
+	@IsUUID()
+	@IsNotEmpty()
+	conversationId: string;
 
-    @IsString()
-    @IsOptional()
-    type?: string = 'text';
+	@IsString()
+	@IsOptional()
+	type?: string = 'text';
 
-    @IsIn(['user', 'bot'])
-    @IsNotEmpty()
-    sender: 'user' | 'bot';
+	@IsIn(['user', 'bot'])
+	@IsNotEmpty()
+	sender: 'user' | 'bot';
+
+	@IsString()
+	@IsOptional()
+	session_token?: string;
 }

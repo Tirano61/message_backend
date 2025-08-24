@@ -17,6 +17,22 @@ export class Message {
     @Column('text')
     content: string;
 
+    // Idempotency / external source id (por ejemplo id de n8n)
+    @Column({ type: 'varchar', nullable: true, unique: true })
+    external_id?: string;
+
+    // session id que usa n8n en memoria
+    @Column({ type: 'varchar', nullable: true })
+    session_id?: string;
+
+    // guardar el objeto completo que n8n usa (type, content, additional_kwargs, response_metadata...)
+    @Column({ type: 'jsonb', nullable: true })
+    n8n_message?: any;
+
+    // campo libre para metadatos adicionales
+    @Column({ type: 'jsonb', nullable: true })
+    meta?: any;
+
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
 }

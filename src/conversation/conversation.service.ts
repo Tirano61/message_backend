@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { CreateConversationDto } from './dto/create-conversation.dto';
 import { UpdateConversationDto } from './dto/update-conversation.dto';
 import { Repository } from 'typeorm';
@@ -8,33 +9,43 @@ import { CreateUserDto } from 'src/auth/dto/create_user.dto';
 
 @Injectable()
 export class ConversationService {
-  constructor(
-    @InjectRepository(Conversation)
-    private readonly conversationRepository: Repository<Conversation>,
-  ){}
-  
-  create(createConversationDto: CreateConversationDto) {
-    const { user, title } = createConversationDto;
-    const conversation = this.conversationRepository.create({
-      user: { id: user },
-      title: title || 'title',
-    });
-    return this.conversationRepository.save(conversation);
-  }
+	constructor(
+		@InjectRepository(Conversation)
+		private readonly conversationRepository: Repository<Conversation>,
+	) { }
 
-  findAll() {
-    return this.conversationRepository.find();
-  }
+	create(createConversationDto: CreateConversationDto) {
+		// Defensive: allow missing body to avoid runtime destructuring error
+		const { user, title } = createConversationDto ?? {} as Partial<CreateConversationDto>;
+		const sessionToken = randomUUID();
+		const payload: any = {
+			title: title || 'title',
+			session_token: sessionToken,
+		};
 
-  findOne(id: number) {
-    return `This action returns a #${id} conversation`;
-  }
+		if (user) payload.user = { id: user };
 
-  update(id: number, updateConversationDto: UpdateConversationDto) {
-    return `This action updates a #${id} conversation`;
-  }
+		const conversation = this.conversationRepository.create(payload);
+		return this.conversationRepository.save(conversation);
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} conversation`;
-  }
+	findAll() {
+		return this.conversationRepository.find();
+	}
+
+	findOne(id: string) {
+		return `This action returns a #${id} conversation`;
+	}
+
+	async findOneById(id: string) {
+		return this.conversationRepository.findOne({ where: { id } });
+	}
+
+	update(id: string, updateConversationDto: UpdateConversationDto) {
+		return `This action updates a #${id} conversation`;
+	}
+
+	remove(id: string) {
+		return `This action removes a #${id} conversation`;
+	}
 }
