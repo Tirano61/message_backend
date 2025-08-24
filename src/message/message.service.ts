@@ -7,34 +7,34 @@ import { Message } from './entities/message.entity';
 
 @Injectable()
 export class MessageService {
-  constructor(
-    @InjectRepository(Message)
-    private readonly messageRepository: Repository<Message>,
-  ) {}
+	constructor(
+		@InjectRepository(Message)
+		private readonly messageRepository: Repository<Message>,
+	) { }
 
-  async create(createMessageDto: CreateMessageDto): Promise<Message> {
-    const message = this.messageRepository.create({
-      content: createMessageDto.content,
-      sender: createMessageDto.sender,
-      conversation: { id: createMessageDto.conversationId } as any,
-    });
-    
-    return await this.messageRepository.save(message);
-  }
+	async create(createMessageDto: CreateMessageDto): Promise<Message> {
+		const message = this.messageRepository.create({
+			content: createMessageDto.content,
+			sender: createMessageDto.sender,
+			conversation: { id: createMessageDto.conversationId } as any,
+		});
 
-  findAll() {
-    return `This action returns all message`;
-  }
+		return await this.messageRepository.save(message);
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
-  }
+	findAll() {
+		return `This action returns all message`;
+	}
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
-  }
+	findOne(id: number) {
+		return `This action returns a #${id} message`;
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} message`;
-  }
+	update(id: number, updateMessageDto: UpdateMessageDto) {
+		return `This action updates a #${id} message`;
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} message`;
+	}
 }

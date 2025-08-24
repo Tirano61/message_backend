@@ -2,12 +2,12 @@ import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validato
 
 export class CreateConversationDto {
 
-    @IsUUID()
-    @IsNotEmpty()
-    user: string;
+	@IsOptional()
+	@IsUUID()
+	user?: string;
 
-    @IsOptional()
-    @IsString()
-    title?: string;
+	@IsOptional()
+	@IsString()
+	title?: string;
 
 }
