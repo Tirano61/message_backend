@@ -11,22 +11,19 @@ import { SalesAgentLogModule } from './sales_agent_log/sales_agent_log.module';
 
 
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
-      port: +(process.env.BD_PORT ?? 5433), 
+      port: +(process.env.BD_PORT ?? 5433),
       database: process.env.POSTGRES_DB_NAME,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       autoLoadEntities: true,
-      synchronize: true, 
-      extra: {
-        
-      }
+      synchronize: false, // importante: no permitir que TypeORM altere esquema con tipos no reconocidos
+      extra: {}
     }),
     AuthModule,
     MessageModule,
