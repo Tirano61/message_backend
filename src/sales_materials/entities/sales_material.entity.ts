@@ -27,10 +27,8 @@ export class SalesMaterial {
     @Column('text', { array: true, default: '{}' })
     tags: string[];
 
-    //@Column({ type: 'vector', dimension: 1536, nullable: true } as any)
-    //embedding: number[];
-    @Column('float', { array: true, nullable: true })   
-    embedding: number[];
+    @Column('text')
+    text: string;
 
     @Column('jsonb', { default: '{}' })
     metadata: Record<string, any>;

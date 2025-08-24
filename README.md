@@ -58,6 +58,40 @@ docker-compose up -d
     npm install --save-dev @types/passport-jwt
     ```
 
+## Migraciones / Uso de pgvector
+
+Para usar pgvector y tener la columna `embedding` (tipo `vector(1536)`) en la tabla `sales_materials` ejecuta la migración TypeORM incluida. Usamos migraciones porque:
+
+- TypeORM no reconoce nativamente el tipo `vector` y puede lanzar `DataTypeNotSupportedError` si intenta validar/crear ese tipo automáticamente.
+- Mantener `synchronize: false` y aplicar migraciones evita cambios inesperados en producción y nos permite crear la extensión y la columna `embedding` de forma controlada.
+
+Comando para ejecutar la migración (desde la raíz del proyecto):
+
+```bash
+# instalar ts-node si hace falta (solo si ejecutas migraciones en .ts)
+npm install -D ts-node
+
+# ejecutar la migración usando el data-source proporcionado
+npx typeorm migration:run --dataSource src/data-source.ts
+```
+
+Requisitos y notas:
+- Asegúrate de tener las variables de conexión en el entorno (.env) (POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB_NAME, BD_HOST, BD_PORT).
+- La migración crea las extensiones necesarias (`uuid-ossp`, `vector`) y la tabla `sales_materials` con la columna `embedding vector(1536)`.
+- Mantén `synchronize: false` en `TypeOrmModule.forRoot(...)` para que TypeORM no intente crear/alterar tipos no soportados.
+- En la entidad de Nest no mapeamos la columna `embedding` (evitamos `@Column('vector', ...)`) — se actualiza desde el servicio con una query raw (ej. usando `pgvector.toSql(embedding)`).
+- Si necesitas ejecutar el SQL manualmente en vez de usar TypeORM CLI, hay un archivo SQL en `migrations/001_create_sales_materials.sql` (si añadiste la opción A).  
+
+Ejemplo rápido de uso en service (ya incluido en el proyecto):
+- Guardar el registro con TypeORM (entidad sin `embedding`).
+- Pedir embedding a OpenAI.
+- Actualizar la columna vector con una query raw:
+```sql
+UPDATE sales_materials SET embedding = '[0.1,0.2,...]'::vector WHERE id = $1;
+```
+
+Si tienes dudas al ejecutar `npx typeorm migration:run`, pega el error y te indico el paso siguiente.
+
 
 
 
