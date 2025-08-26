@@ -8,7 +8,8 @@ async function bootstrap() {
 		origin: [
 			'http://localhost:49371',   // puerto del servidor dev Flutter (ajusta)
 			'http://127.0.0.1:59074',
-			'http://localhost:8080',    // otros orígenes que uses
+			'http://localhost:8080',
+			'http://localhost:5678',   // otros orígenes que uses
 		],
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 		allowedHeaders: 'Content-Type, Authorization, Accept, Origin, X-Requested-With',
