@@ -20,6 +20,8 @@ export class N8nWebhooksController {
 			sender: (sender ?? 'bot') as 'user' | 'bot',
 		});
 
+		console.log({ first: saved });
+
 		// Emit to conversation room
 		this.socketEmitter.emitToConversation(conversationId, 'message', saved);
 
@@ -29,3 +31,4 @@ export class N8nWebhooksController {
 		return { ok: true, saved };
 	}
 }
+

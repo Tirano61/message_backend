@@ -14,6 +14,7 @@ export class SocketEmitterService {
 	}
 
 	emitToSocket(socketId: string, event: string, payload: any) {
+		console.log({ payload });
 		this.server?.to(socketId).emit(event, payload);
 	}
 }

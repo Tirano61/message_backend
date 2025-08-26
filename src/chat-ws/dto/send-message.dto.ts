@@ -14,8 +14,8 @@ export class SendMessageDto {
 	type?: string = 'text';
 
 	@IsIn(['user', 'bot'])
-	@IsNotEmpty()
-	sender: 'user' | 'bot';
+	@IsOptional()
+	sender?: 'user' | 'bot' = 'user';
 
 	@IsString()
 	@IsOptional()
