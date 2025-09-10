@@ -20,10 +20,8 @@ export class N8nWebhooksController {
 			sender: (sender ?? 'bot') as 'user' | 'bot',
 		});
 
-		console.log({ first: saved });
-
 		// Emit to conversation room
-		this.socketEmitter.emitToConversation(conversationId, 'message', saved);
+		//this.socketEmitter.emitToConversation(conversationId, 'message', saved);
 
 		// Also emit directly to socketId if provided
 		if (socketId) this.socketEmitter.emitToSocket(socketId, 'message', saved);

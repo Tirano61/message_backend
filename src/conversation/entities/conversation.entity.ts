@@ -30,4 +30,7 @@ export class Conversation {
 	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
 	updated_at: Date;
 
+	@Column({ type: 'enum', enum: ['sales', 'tecnico', 'anonimo'], default: 'anonimo' })
+	type: string;
+
 }
