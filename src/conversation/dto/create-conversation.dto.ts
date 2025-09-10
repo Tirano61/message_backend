@@ -10,4 +10,7 @@ export class CreateConversationDto {
 	@IsString()
 	title?: string;
 
+	@IsEnum(['sales', 'tecnico', 'anonimo'])
+	type: string;
+
 }
