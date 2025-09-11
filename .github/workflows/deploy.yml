@@ -17,6 +17,5 @@ jobs:
           username: ${{ vars.PRODUCTION_SSH_USER }}
           key: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
           script: |
-            cd /root/repos/message_backend
-            git pull
+            /root/repos/message_backend/deploy.sh
 
